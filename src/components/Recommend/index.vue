@@ -18,6 +18,9 @@ export default {
       getRecommend().then(res => {
         if (res.code === ERR_OK) {
           console.log(res)
+        } else {
+          console.log('出错率');
+          
         }
       })
     }
