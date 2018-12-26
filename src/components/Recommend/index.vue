@@ -1,8 +1,8 @@
 <template>
   <div class="recommend">
-    <h1>
-      推荐
-    </h1>
+    <div class="carousel">
+      <img src="" alt="">
+    </div>
   </div>
 </template>
 
