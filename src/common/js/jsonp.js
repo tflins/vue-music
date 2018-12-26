@@ -15,7 +15,7 @@ export default function jsonp(url, data, option) {
   return new Promise((resolve, reject) => {
     originJSONP(url, option, (err, data) => {
       if (!err) {
-        resolve(dara)
+        resolve(data)
       } else {
         reject(err)
       }

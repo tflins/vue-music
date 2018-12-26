@@ -1,13 +1,28 @@
 <template>
   <div class="recommend">
-    <div class="carousel">
-      <img src="" alt="">
-    </div>
+    <h1>推荐</h1>
   </div>
 </template>
 
 <script>
-export default {}
+import {getRecommend} from '@/api/recommend'
+import {ERR_OK} from '@/api/config'
+
+export default {
+  name: 'Recommend',
+  created() {
+    this._getRecommend()
+  },
+  methods: {
+    _getRecommend() {
+      getRecommend().then(res => {
+        if (res.code === ERR_OK) {
+          console.log(res)
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
