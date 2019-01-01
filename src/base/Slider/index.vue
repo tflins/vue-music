@@ -38,13 +38,12 @@ export default {
 
       let width = 0
       let sliderWidth = this.$refs.slider.clientWidth
-      console.log(this.children.length)
+
       for (let i = 0, len = this.children.length; i < len; i++) {
         let child = this.children[i]
         addClass(child, 'slider-item')
 
         child.style.width = sliderWidth + 'px'
-        console.log(child.style.width)
 
         width += sliderWidth
       }
