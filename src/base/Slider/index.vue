@@ -3,7 +3,9 @@
     <div class="slider-group" ref="sliderGroup">
       <slot></slot>
     </div>
-    <div class="dots"></div>
+    <div class="dots">
+      <span class="dot" v-for="(item, index) in dots" :key="item" :class="{active: currentPageIndex === index}"></span>
+    </div>
   </div>
 </template>
 
@@ -12,6 +14,7 @@ import BScroll from 'better-scroll'
 import {addClass} from '@/common/js/dom'
 
 export default {
+  name: 'Slider',
   props: {
     loop: {
       type: Boolean,
@@ -26,9 +29,16 @@ export default {
       default: 4000
     }
   },
+  data() {
+    return {
+      dots: [],
+      currentPageIndex: 0
+    }
+  },
   mounted() {
     setTimeout(() => {
       this._setSliderWidth()
+      this._initDots()
       this._initSlider()
     }, 20)
   },
@@ -64,6 +74,17 @@ export default {
         snapThreshold: 0.3,
         snapSpeed: 400
       })
+
+      this.slider.on('scrollEnd', () => {
+        let pageIndex = this.slider.getCurrentPage().pageX
+        // if (this.loop) {
+        //   pageIndex -= 1
+        // }
+        this.currentPageIndex = pageIndex
+      })
+    },
+    _initDots() {
+      this.dots = new Array(this.children.length)
     }
   }
 }
@@ -110,7 +131,7 @@ export default {
       border-radius: 50%;
       background-color: $color-text-l;
       &.active {
-        width: 20%;
+        width: 20px;
         border-radius: 5px;
         background-color: $color-text-ll;
       }
