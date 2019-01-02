@@ -44,7 +44,6 @@ export default {
         addClass(child, 'slider-item')
 
         child.style.width = sliderWidth + 'px'
-        console.log(child.style.width)
 
         width += sliderWidth
       }
