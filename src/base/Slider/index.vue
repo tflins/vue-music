@@ -89,9 +89,6 @@ export default {
 
       this.slider.on('scrollEnd', () => {
         let pageIndex = this.slider.getCurrentPage().pageX
-        // if (this.loop) {
-        //   pageIndex -= 1
-        // }
         this.currentPageIndex = pageIndex
 
         if (this.autoPlay) {
@@ -104,12 +101,8 @@ export default {
       this.dots = new Array(this.children.length)
     },
     _play() {
-      let pageIndex = this.currentPageIndex + 1
-      // if (this.loop) {
-      //   pageIndex += 1
-      // }
       this.timer = setTimeout(() => {
-        this.slider.goToPage(pageIndex, 0, 400)
+        this.slider.next()
       }, this.interval)
     }
   },
