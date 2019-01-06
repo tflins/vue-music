@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {getRecommend} from '@/api/recommend'
+import {getRecommend, getList} from '@/api/recommend'
 import Slider from '@/base/Slider'
 import {ERR_OK} from '@/api/config'
 
@@ -27,6 +27,7 @@ export default {
   name: 'Recommend',
   created() {
     this._getRecommend()
+    this._getList()
   },
   data() {
     return {
@@ -38,6 +39,14 @@ export default {
       getRecommend().then(res => {
         if (res.code === ERR_OK) {
           this.recommends = res.data.slider
+        }
+      })
+    },
+
+    _getList() {
+      getList().then(res => {
+        if (res.code === ERR_OK) {
+          console.log(res.data.list)
         }
       })
     }
