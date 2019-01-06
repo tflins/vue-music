@@ -24,8 +24,8 @@ export function getRecommend() {
  * 接口：https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg
  * 提供方：QQ音乐
  */
-export function getList() {
-  const url = 'api/getList'
+export function getDiscList() {
+  const url = 'api/getDiscList'
 
   const data = Object.assign({}, commonParams, {
     format: 'json',
