@@ -69,7 +69,10 @@ export default {
 
     // 当轮播组件中的图片加载完成时触发
     loadImage() {
+      // load时,只需刷新一次
+      if (this.isRefresh) return
       this.$refs.scroll.refresh()
+      this.isRefresh = true
     }
   },
   components: {
