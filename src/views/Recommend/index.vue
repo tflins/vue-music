@@ -1,11 +1,12 @@
 <template>
   <div class="recommend">
-    <div class="recommend-content">
-      <div v-if="recommends.length" class="slider-wrapper">
+    <scroll ref="scroll" class="recommend-content" :data="discList">
+      <div>
+        <div v-if="recommends.length" class="slider-wrapper">
         <slider>
           <div v-for="item in recommends" :key="item.id">
             <a :href="item.linkUrl">
-              <img :src="item.picUrl">
+              <img @load="loadImage" :src="item.picUrl">
             </a>
           </div>
         </slider>
@@ -24,12 +25,14 @@
           </li>
         </ul>
       </div>
-    </div>
+      </div>
+    </scroll>
   </div>
 </template>
 
 <script>
 import {getRecommend, getDiscList} from '@/api/recommend'
+import Scroll from '@/base/Scroll'
 import Slider from '@/base/Slider'
 import {ERR_OK} from '@/api/config'
 
@@ -62,10 +65,16 @@ export default {
           this.discList = res.data.list
         }
       })
+    },
+
+    // 当轮播组件中的图片加载完成时触发
+    loadImage() {
+      this.$refs.scroll.refresh()
     }
   },
   components: {
-    Slider
+    Slider,
+    Scroll
   }
 }
 </script>
