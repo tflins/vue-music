@@ -16,14 +16,17 @@ import {addClass} from '@/common/js/dom'
 export default {
   name: 'Slider',
   props: {
+    // 是否开启循环轮播
     loop: {
       type: Boolean,
       default: true
     },
+    // 是否自动轮播
     autoPlay: {
       type: Boolean,
       default: true
     },
+    // 轮播速度
     interval: {
       type: Number,
       default: 4000
@@ -37,6 +40,7 @@ export default {
   },
   mounted() {
     /**
+     * 1000/60
      * 当vue将元素挂载在dom上时，要给浏览器去渲染的时间，浏览器刷新一般为17ms一次，这20ms就是给浏览器渲染dom用的
      * 不过这种做法一般比较从扯淡，官方文档明确的说明使用this.$nextTick()，就是为了解决dom渲染的问题，所以不要用setTimeout
      */

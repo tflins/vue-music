@@ -1,7 +1,7 @@
 <template>
   <div class="m-header">
     <div class="icon"></div>
-    <div class="text">欣音悦</div>
+    <div class="text">音 悦</div>
   </div>
 </template>
 
@@ -23,11 +23,11 @@ export default {}
     display: inline-block;
     vertical-align: top;
     margin-top: 6px;
-    width: 30px;
+    width: 32px;
     height: 32px;
     margin-right: 9px;
     @include bg-image("logo");
-    background-size: 30px 32px;
+    background-size: 32px 32px;
   }
   .text {
       display: inline-block;

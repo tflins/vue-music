@@ -10,7 +10,7 @@ import BScroll from 'better-scroll'
 export default {
   name: 'Scroll',
   props: {
-    // 探测器类型
+    // 探测器类型，这里的配置具体可以去 better-scroll 的官方文档上看
     probeType: {
       type: Number,
       default: 1
@@ -20,7 +20,7 @@ export default {
       type: Boolean,
       default: true
     },
-    // 主要是为了有个可以监听数据的变化，好refresh重新计算高度
+    // 主要是为了有个可以监听数据的变化，好 refresh 重新计算高度
     data: {
       type: Array,
       default: null
@@ -28,9 +28,10 @@ export default {
   },
   mounted() {
     /**
-     * 前面说过了，使用setTimeout是比较扯淡的行为
+     * 前面说过了，使用 setTimeout 是比较扯淡的行为
      * 当vue将元素挂载在dom上时，要给浏览器去渲染的时间，浏览器刷新一般为17ms一次，这20ms就是给浏览器渲染dom用的
-     * 不过这种做法一般比较从扯淡，官方文档明确的说明使用this.$nextTick()，就是为了解决dom渲染的问题，所以不要用setTimeout
+     * 不过这种做法一般比较从扯淡，官方文档明确的说明使用 this.$nextTick() ，就是为了解决dom渲染的问题，
+     * 所以不要用 setTimeout
      */
     // 为了确保DOM已经渲染了
     // setTimeout(() => {
@@ -50,6 +51,7 @@ export default {
         click: this.click
       })
     },
+    // 设置几个代理函数
     // 启用Scroll
     enable() {
       this.scroll && this.scroll.enable()
@@ -64,7 +66,7 @@ export default {
     }
   },
   watch: {
-    // 监听数据变化时刷新 better-scroll 重新计算高度
+    // 监听data数据变化时刷新 better-scroll 重新计算高度
     data() {
       setTimeout(() => {
         this.refresh()
