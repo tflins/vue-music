@@ -27,10 +27,18 @@ export default {
     }
   },
   mounted() {
+    /**
+     * 前面说过了，使用setTimeout是比较扯淡的行为
+     * 当vue将元素挂载在dom上时，要给浏览器去渲染的时间，浏览器刷新一般为17ms一次，这20ms就是给浏览器渲染dom用的
+     * 不过这种做法一般比较从扯淡，官方文档明确的说明使用this.$nextTick()，就是为了解决dom渲染的问题，所以不要用setTimeout
+     */
     // 为了确保DOM已经渲染了
-    setTimeout(() => {
+    // setTimeout(() => {
+    //   this._initScroll()
+    // }, 20)
+    this.$nextTick(() => {
       this._initScroll()
-    }, 20)
+    })
   },
   methods: {
     // 初始化Scroll
