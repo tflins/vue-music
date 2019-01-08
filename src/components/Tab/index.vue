@@ -16,7 +16,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Tab'
+}
 </script>
 
 <style lang="scss" scoped>

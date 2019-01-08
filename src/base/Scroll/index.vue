@@ -66,7 +66,7 @@ export default {
     }
   },
   watch: {
-    // 监听data数据变化时刷新 better-scroll 重新计算高度
+    // 监听data数据变化时刷新 better-scroll 重新计算高度，使用监听数据变化让组件自己刷新，避免我们使用命令式的编程
     data() {
       setTimeout(() => {
         this.refresh()

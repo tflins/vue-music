@@ -16,7 +16,7 @@
         <ul>
           <li class="item" v-for="item in discList" :key="item.dissid">
             <div class="icon">
-              <img width="60" height="60" :src="item.imgurl">
+              <img width="60" height="60" v-lazy="item.imgurl">
             </div>
             <div class="text">
               <p class="name" v-html="item.creator.name"></p>
