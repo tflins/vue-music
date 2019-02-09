@@ -10,21 +10,24 @@
             </a>
           </div>
         </slider>
+        </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li class="item" v-for="item in discList" :key="item.dissid">
+              <div class="icon">
+                <img width="60" height="60" v-lazy="item.imgurl">
+              </div>
+              <div class="text">
+                <p class="name" v-html="item.creator.name"></p>
+                <p class="desc" v-html="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="recommend-list">
-        <h1 class="list-title">热门歌单推荐</h1>
-        <ul>
-          <li class="item" v-for="item in discList" :key="item.dissid">
-            <div class="icon">
-              <img width="60" height="60" v-lazy="item.imgurl">
-            </div>
-            <div class="text">
-              <p class="name" v-html="item.creator.name"></p>
-              <p class="desc" v-html="item.dissname"></p>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <div class="loading-container" v-show="!discList.length">
+        <loading></loading>
       </div>
     </scroll>
   </div>
@@ -32,6 +35,7 @@
 
 <script>
 import {getRecommend, getDiscList} from '@/api/recommend'
+import Loading from '@/base/Loading'
 import Scroll from '@/base/Scroll'
 import Slider from '@/base/Slider'
 import {ERR_OK} from '@/api/config'
@@ -77,7 +81,8 @@ export default {
   },
   components: {
     Slider,
-    Scroll
+    Scroll,
+    Loading
   }
 }
 </script>
