@@ -1,12 +1,11 @@
 <template>
   <div class="singer">
-    <h1>
-      歌手
-    </h1>
+    <list-view :data="singers"></list-view>
   </div>
 </template>
 
 <script>
+import ListView from '@/base/ListView'
 import {getSingerList} from '@/api/singer'
 import {ERR_OK} from '@/api/config'
 // 导入自定义的一个 Singer 对象，提取了重复的代码
@@ -33,8 +32,7 @@ export default {
     _getSingerList() {
       getSingerList().then(res => {
         if (res.code === ERR_OK) {
-          this.singers = res.data.list
-          console.log(this._formatSinger(this.singers))
+          this.singers = this._formatSinger(res.data.list)
         }
       })
     },
@@ -42,7 +40,7 @@ export default {
     /**
      * 规范歌手数据结构
      */
-    _formatSinger(list) {     
+    _formatSinger(list) {
       let map = {
         hot: {
           title: HOT_NAME,
@@ -77,6 +75,7 @@ export default {
           name: item.Fsinger_name
         }))
       })
+
       // 得到有序列表
       const hot = []
       const others = []
@@ -93,6 +92,9 @@ export default {
       })
       return hot.concat(others)
     }
+  },
+  components: {
+    ListView
   }
 }
 </script>
