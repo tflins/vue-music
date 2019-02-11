@@ -42,7 +42,7 @@ export default {
     /**
      * 规范歌手数据结构
      */
-    _formatSinger(list) {
+    _formatSinger(list) {     
       let map = {
         hot: {
           title: HOT_NAME,
@@ -77,7 +77,21 @@ export default {
           name: item.Fsinger_name
         }))
       })
-      console.log(map)
+      // 得到有序列表
+      const hot = []
+      const others = []
+      for (let key in map) {
+        let val = map[key]
+        if (val.title.match(/[a-zA-z]/)) {
+          others.push(val)
+        } else if (val.title === HOT_NAME) {
+          hot.push(val)
+        }
+      }
+      others.sort((a, b) => {
+        return a.title.charCodeAt(0) - b.title.charCodeAt(0)
+      })
+      return hot.concat(others)
     }
   }
 }
