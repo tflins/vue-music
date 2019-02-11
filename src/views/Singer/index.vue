@@ -9,6 +9,13 @@
 <script>
 import {getSingerList} from '@/api/singer'
 import {ERR_OK} from '@/api/config'
+// 导入自定义的一个 Singer 对象，提取了重复的代码
+import Singer from '@/common/js/SingerClass'
+
+// 热门歌手标题
+const HOT_NAME = '热门'
+// 热门歌手条数
+const HOT_SINGER_LENGTH = 10
 
 export default {
   data() {
@@ -20,13 +27,57 @@ export default {
     this._getSingerList()
   },
   methods: {
+    /**
+     * 获取歌手信息
+     */
     _getSingerList() {
       getSingerList().then(res => {
         if (res.code === ERR_OK) {
           this.singers = res.data.list
-          console.log(this.singers)
+          console.log(this._formatSinger(this.singers))
         }
       })
+    },
+
+    /**
+     * 规范歌手数据结构
+     */
+    _formatSinger(list) {
+      let map = {
+        hot: {
+          title: HOT_NAME,
+          items: []
+        }
+      }
+
+      // 填充歌手数据
+      list.forEach((item, index) => {
+        // 热门歌手
+        if (index < HOT_SINGER_LENGTH) {
+          /* eslint-disable */
+          map.hot.items.push(new Singer({
+            id: item.Fsinger_mid,
+            name: item.Fsinger_name
+          }))
+        }
+
+        // 填充索引 a-z
+        const key = item.Findex
+        if (!map[key]) {
+          map[key] = {
+            title: key,
+            items: []
+          }
+        }
+
+        // 填充对应字母歌手数据
+        /* eslint-disable */
+        map[key].items.push(new Singer({
+          id: item.Fsinger_mid,
+          name: item.Fsinger_name
+        }))
+      })
+      console.log(map)
     }
   }
 }
