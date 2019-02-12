@@ -30,11 +30,11 @@ export default {
   filters: {
     handleName(name) {
       const nameDictionary = {
-        '薛之谦': '傻逼',
-        '周杰伦': '华语第一',
-        '林俊杰': '华语之光'
+        '薛之谦': '(傻逼)',
+        '周杰伦': '(华语第一)',
+        '林俊杰': '(华语之光)'
       }
-      return `${name}(${nameDictionary[name]})`
+      return `${name}${nameDictionary[name] || ''}`
     }
   },
   methods: {
