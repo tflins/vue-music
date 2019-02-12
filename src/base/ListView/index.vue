@@ -4,7 +4,7 @@
       <li v-for="group in data" :key="group.title" class="list-group">
         <h2 class="list-group-title">{{ group.title }}</h2>
         <ul>
-          <li v-for="item in group.items" :key="item.id" class="list-group-item">
+          <li v-for="item in group.items" :key="item.id" class="list-group-item" @click="undone">
             <img v-lazy="item.avater" class="avater">
             <span class="name">{{ item.name | handleName}}</span>
           </li>
@@ -35,6 +35,11 @@ export default {
         '林俊杰': '华语之光'
       }
       return `${name}(${nameDictionary[name]})`
+    }
+  },
+  methods: {
+    undone() {
+      alert('在家过年呢，别急！')
     }
   }
 }
