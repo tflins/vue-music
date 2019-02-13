@@ -104,8 +104,9 @@ export default {
 @import "@/common/scss/const.scss";
 
 .singer {
-  h1 {
-    color: $color-text;
-  }
+  position: fixed;
+  top: 88px;
+  bottom: 0;
+  width: 100%;
 }
 </style>

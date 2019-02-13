@@ -11,6 +11,11 @@
         </ul>
       </li>
     </ul>
+    <div class="list-shortcut">
+      <ul>
+        <li v-for="item in shortcutList" :key="item" class="item">{{ item }}</li>
+      </ul>
+    </div>
   </scroll>
 </template>
 
@@ -41,6 +46,13 @@ export default {
     undone() {
       alert('在家过年呢，别急！')
     }
+  },
+  computed: {
+    shortcutList() {
+      return this.data.map((group) => {
+        return group.title.substr(0, 1)
+      })
+    }
   }
 }
 </script>
@@ -49,7 +61,7 @@ export default {
 @import "@/common/scss/const.scss";
 
 .listview {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
