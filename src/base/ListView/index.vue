@@ -1,7 +1,7 @@
 <template>
-  <scroll class="listview" :data="data">
+  <scroll class="listview" :data="data" ref="listview">
     <ul>
-      <li v-for="group in data" :key="group.title" class="list-group">
+      <li v-for="group in data" :key="group.title" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{ group.title }}</h2>
         <ul>
           <li v-for="item in group.items" :key="item.id" class="list-group-item" @click="undone">
@@ -11,9 +11,9 @@
         </ul>
       </li>
     </ul>
-    <div class="list-shortcut">
+    <div class="list-shortcut" @touchstart="onShortcutTouchStart">
       <ul>
-        <li v-for="item in shortcutList" :key="item" class="item">{{ item }}</li>
+        <li v-for="(item, index) in shortcutList" :key="item" :data-index="index" class="item">{{ item }}</li>
       </ul>
     </div>
   </scroll>
@@ -21,6 +21,7 @@
 
 <script>
 import Scroll from '@/base/Scroll'
+import {getData} from '@/common/js/dom.js'
 
 export default {
   props: {
@@ -45,6 +46,10 @@ export default {
   methods: {
     undone() {
       alert('在家过年呢，别急！')
+    },
+    onShortcutTouchStart(e) {
+      let anchorIndex = getData(e.target, 'index')
+      this.$refs.listview.scrollToElement(this.$refs.listGroup[anchorIndex], 0)
     }
   },
   computed: {
