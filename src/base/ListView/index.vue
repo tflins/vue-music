@@ -1,5 +1,11 @@
 <template>
-  <scroll class="listview" :data="data" ref="listview">
+  <scroll
+    class="listview"
+    :data="data"
+    ref="listview"
+    :listenScroll="listenScroll"
+    @scroll="scroll"
+    >
     <ul>
       <li v-for="group in data" :key="group.title" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{ group.title }}</h2>
@@ -36,6 +42,7 @@ export default {
      * 所以我们将touch对象在此处创建，因为我不想多此一举，不想监测数据的变化
      */
     this.touch = {}
+    this.listenScroll = true
   },
   props: {
     data: {
@@ -75,8 +82,11 @@ export default {
       let anchorIndex = parseInt(this.touch.anchorIndex) + delta
       this._scrollTo(anchorIndex)
     },
+    scroll(pos) {
+      this.scrollY = pos.y
+    },
     _scrollTo(index) {
-      this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0.1)
+      this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0)
     }
   },
   computed: {

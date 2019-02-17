@@ -24,6 +24,11 @@ export default {
     data: {
       type: Array,
       default: null
+    },
+    // 是否监听滚动
+    lestenScroll: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
@@ -50,6 +55,13 @@ export default {
         probeType: this.probeType,
         click: this.click
       })
+
+      if (this.lestenScroll) {
+        const _this = this
+        this.scroll.on('scroll', pos => {
+          _this.$emit('scroll', pos)
+        })
+      }
     },
     // 设置几个代理函数
     // 启用Scroll
