@@ -11,7 +11,7 @@
         </ul>
       </li>
     </ul>
-    <div class="list-shortcut" @touchstart="onShortcutTouchStart">
+    <div class="list-shortcut" @touchstart="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove">
       <ul>
         <li v-for="(item, index) in shortcutList" :key="item" :data-index="index" class="item">{{ item }}</li>
       </ul>
@@ -23,7 +23,20 @@
 import Scroll from '@/base/Scroll'
 import {getData} from '@/common/js/dom.js'
 
+// 快速入口的每个锚点高度
+const ANCHOR_HEIGHT = 18
+
 export default {
+  created() {
+    /**
+     * 在vue实例创建之前添加一个对象实现touch位置的数据共享
+     * 解释：为什么不在data或props中设置该属性呢？
+     * 因为，再vue中，不管是data或props中的东西，它都会被添加上一个getter、setter
+     * 也就是说，它会监测data、props及computed中的数据变化，已实现双向绑定
+     * 所以我们将touch对象在此处创建，因为我不想多此一举，不想监测数据的变化
+     */
+    this.touch = {}
+  },
   props: {
     data: {
       type: Array,
@@ -49,7 +62,21 @@ export default {
     },
     onShortcutTouchStart(e) {
       let anchorIndex = getData(e.target, 'index')
-      this.$refs.listview.scrollToElement(this.$refs.listGroup[anchorIndex], 0)
+      // 首次按下屏幕的位置
+      let firstTouch = e.touches[0]
+      this.touch.y1 = firstTouch.pageY
+      this.touch.anchorIndex = anchorIndex
+      this._scrollTo(anchorIndex)
+    },
+    onShortcutTouchMove(e) {
+      let firstTouch = e.touches[0]
+      this.touch.y2 = firstTouch.pageY
+      let delta = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0
+      let anchorIndex = parseInt(this.touch.anchorIndex) + delta
+      this._scrollTo(anchorIndex)
+    },
+    _scrollTo(index) {
+      this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0.1)
     }
   },
   computed: {
