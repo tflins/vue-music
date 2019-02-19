@@ -13,7 +13,7 @@ export default {
     // 探测器类型，这里的配置具体可以去 better-scroll 的官方文档上看
     probeType: {
       type: Number,
-      default: 1
+      default: 3
     },
     // 是否派发点击事件
     click: {
@@ -25,8 +25,8 @@ export default {
       type: Array,
       default: null
     },
-    // 是否监听滚动
-    lestenScroll: {
+    // 是否监听滚动，该属性就是为了让我们决定是否要去监听滚动事件，因为有些组件是不需要关心滚动事件的，所以默认为 false
+    listenScroll: {
       type: Boolean,
       default: false
     }
@@ -56,8 +56,9 @@ export default {
         click: this.click
       })
 
-      if (this.lestenScroll) {
+      if (this.listenScroll) {
         const _this = this
+        // 监听 srcoll 事件，派发一个 scroll 事件
         this.scroll.on('scroll', pos => {
           _this.$emit('scroll', pos)
         })
@@ -86,9 +87,9 @@ export default {
   watch: {
     // 监听data数据变化时刷新 better-scroll 重新计算高度，使用监听数据变化让组件自己刷新，避免我们使用命令式的编程
     data() {
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.refresh()
-      }, 20)
+      })
     }
   }
 }

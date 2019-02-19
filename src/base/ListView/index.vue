@@ -4,8 +4,9 @@
     :data="data"
     ref="listview"
     :listenScroll="listenScroll"
+    :probeType="probeType"
     @scroll="scroll"
-    >
+  >
     <ul>
       <li v-for="group in data" :key="group.title" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{ group.title }}</h2>
@@ -42,7 +43,18 @@ export default {
      * 所以我们将touch对象在此处创建，因为我不想多此一举，不想监测数据的变化
      */
     this.touch = {}
+    // 传给 Srcoll 组件开启监听滚动事件
     this.listenScroll = true
+    this.listHeight = []
+    this.probeType = 3
+  },
+  data() {
+    return {
+      // 实时滚动的位置
+      scrollY: -1,
+      // 当前高亮的锚点
+      currentIndex: 0
+    }
   },
   props: {
     data: {
@@ -87,6 +99,40 @@ export default {
     },
     _scrollTo(index) {
       this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0)
+    },
+    _calculateHeight() {
+      this.listHeight = []
+      const list = this.$refs.listGroup
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0, len = list.length; i < len; i++) {
+        let item = list[i]
+        height += item.clientHeight
+        this.listHeight.push(height)
+      }
+    }
+  },
+  watch: {
+    // 监听 data 变化的时候，计算高度
+    data() {
+      this.$nextTick(() => {
+        this._calculateHeight()
+      })
+    },
+    scrollY(newY) {
+      const listHeight = this.listHeight
+      for (let i = 0, len = listHeight.length; i < len; i++) {
+        // 高度下限
+        let height1 = listHeight[i]
+        // 高度上限
+        let height2 = listHeight[i + 1]
+        if (!height2 || (-newY > height1 && -newY < height2)) {
+          this.currentIndex = i
+          console.log(this.currentIndex)
+          return
+        }
+      }
+      this.currentIndex = 0
     }
   },
   computed: {
