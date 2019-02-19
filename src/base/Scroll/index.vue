@@ -13,7 +13,7 @@ export default {
     // 探测器类型，这里的配置具体可以去 better-scroll 的官方文档上看
     probeType: {
       type: Number,
-      default: 3
+      default: 1
     },
     // 是否派发点击事件
     click: {
