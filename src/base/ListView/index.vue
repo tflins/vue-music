@@ -20,7 +20,7 @@
     </ul>
     <div class="list-shortcut" @touchstart="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove">
       <ul>
-        <li v-for="(item, index) in shortcutList" :key="item" :data-index="index" class="item">{{ item }}</li>
+        <li v-for="(item, index) in shortcutList" :key="item" :data-index="index" class="item" :class="{'current': currentIndex === index}">{{ item }}</li>
       </ul>
     </div>
   </scroll>
@@ -121,18 +121,24 @@ export default {
     },
     scrollY(newY) {
       const listHeight = this.listHeight
-      for (let i = 0, len = listHeight.length; i < len; i++) {
+      // 当滚动到顶部，newY > 0
+      if (newY > 0) {
+        this.currentIndex = 0
+        return
+      }
+      for (let i = 0, len = listHeight.length - 1; i < len; i++) {
         // 高度下限
         let height1 = listHeight[i]
         // 高度上限
         let height2 = listHeight[i + 1]
-        if (!height2 || (-newY > height1 && -newY < height2)) {
+        if (!height2 || (-newY >= height1 && -newY < height2)) {
           this.currentIndex = i
           console.log(this.currentIndex)
           return
         }
       }
-      this.currentIndex = 0
+      // 当滚动到底部且 -newY 大于最后一个元素的上限
+      this.currentIndex = listHeight.length - 2
     }
   },
   computed: {
