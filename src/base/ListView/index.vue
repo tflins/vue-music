@@ -101,7 +101,7 @@ export default {
       if (!index && index !== 0) return
       if (index < 0) {
         index = 0
-      }  else if (index > this.listHeight.length -2) {
+      } else if (index > this.listHeight.length - 2) {
         index = this.listHeight.length - 2
       }
       this.scrollY = -this.listHeight[index]
