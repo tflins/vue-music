@@ -23,6 +23,9 @@
         <li v-for="(item, index) in shortcutList" :key="item" :data-index="index" class="item" :class="{'current': currentIndex === index}">{{ item }}</li>
       </ul>
     </div>
+    <div class="list-fixed">
+      <h1 class="fixed-title">{{ fixedTitle }}</h1>
+    </div>
   </scroll>
 </template>
 
@@ -152,6 +155,9 @@ export default {
       return this.data.map((group) => {
         return group.title.substr(0, 1)
       })
+    },
+    fixedTitle() {
+      return this.data[this.currentIndex] ? this.data[this.currentIndex].title : ''
     }
   }
 }

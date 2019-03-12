@@ -14,7 +14,7 @@
         <div class="recommend-list">
           <h1 class="list-title">热门歌单推荐</h1>
           <ul>
-            <li class="item" v-for="item in discList" :key="item.dissid" @click="undone">
+            <li class="item" v-for="item in discList" :key="item.dissid" @click="undone(item)">
               <div class="icon">
                 <img width="60" height="60" v-lazy="item.imgurl">
               </div>
@@ -79,8 +79,9 @@ export default {
       this.isRefresh = true
     },
 
-    undone() {
+    undone(data) {
       alert('在家过年呢，别急！')
+      console.log(data)
     }
   },
   components: {
