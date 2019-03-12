@@ -23,7 +23,7 @@
         <li v-for="(item, index) in shortcutList" :key="item" :data-index="index" class="item" :class="{'current': currentIndex === index}">{{ item }}</li>
       </ul>
     </div>
-    <div class="list-fixed">
+    <div class="list-fixed" v-show="fixedTitle" ref="fixed">
       <h1 class="fixed-title">{{ fixedTitle }}</h1>
     </div>
   </scroll>
@@ -35,6 +35,8 @@ import {getData} from '@/common/js/dom.js'
 
 // 快速入口的每个锚点高度
 const ANCHOR_HEIGHT = 18
+// 标题高度
+const TITLE_HEIGHT = 30
 
 export default {
   created() {
@@ -56,7 +58,9 @@ export default {
       // 实时滚动的位置
       scrollY: -1,
       // 当前高亮的锚点
-      currentIndex: 0
+      currentIndex: 0,
+      // 滚动差
+      diff: -1
     }
   },
   props: {
@@ -136,6 +140,7 @@ export default {
         this.currentIndex = 0
         return
       }
+      // 在中间部分滚动
       for (let i = 0, len = listHeight.length - 1; i < len; i++) {
         // 高度下限
         let height1 = listHeight[i]
@@ -143,11 +148,18 @@ export default {
         let height2 = listHeight[i + 1]
         if (!height2 || (-newY >= height1 && -newY < height2)) {
           this.currentIndex = i
+          this.diff = height2 + newY
           return
         }
       }
       // 当滚动到底部且 -newY 大于最后一个元素的上限
       this.currentIndex = listHeight.length - 2
+    },
+    diff(newVal) {
+      let fixedTop = (newVal > 0 && newVal < TITLE_HEIGHT) ? newVal - TITLE_HEIGHT : 0
+      if (this.fixedTop === fixedTop) return
+      this.fixedTop = fixedTop
+      this.$refs.fixed.style.transform = `translate3d(0, ${fixedTop}px, 0)`
     }
   },
   computed: {
@@ -157,6 +169,7 @@ export default {
       })
     },
     fixedTitle() {
+      if (this.scrollY > 0) return ''
       return this.data[this.currentIndex] ? this.data[this.currentIndex].title : ''
     }
   }
