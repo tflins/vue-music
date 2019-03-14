@@ -1,6 +1,6 @@
 <template>
   <div class="m-header">
-    <div class="icon"></div>
+    <!-- <div class="icon"></div> -->
     <div class="text">音 悦</div>
   </div>
 </template>
