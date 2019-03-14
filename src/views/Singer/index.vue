@@ -11,6 +11,7 @@ import {getSingerList} from '@/api/singer'
 import {ERR_OK} from '@/api/config'
 // 导入自定义的一个 Singer 对象，提取了重复的代码
 import Singer from '@/common/js/SingerClass'
+import {mapMutations} from 'vuex'
 
 // 热门歌手标题
 const HOT_NAME = '热门'
@@ -28,10 +29,10 @@ export default {
   },
   methods: {
     selectSinger(singer) {
-      console.log(singer)
       this.$router.push({
         path: `/singer/${singer.id}`
       })
+      this.setSinger(singer)
     },
     /**
      * 获取歌手信息
@@ -98,7 +99,10 @@ export default {
         return a.title.charCodeAt(0) - b.title.charCodeAt(0)
       })
       return hot.concat(others)
-    }
+    },
+    ...mapMutations({
+      setSinger: 'SET_SINGER'
+    })
   },
   components: {
     ListView
