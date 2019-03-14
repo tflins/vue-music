@@ -11,7 +11,7 @@
       <li v-for="group in data" :key="group.title" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{ group.title }}</h2>
         <ul>
-          <li v-for="item in group.items" :key="item.id" class="list-group-item" @click="undone">
+          <li v-for="item in group.items" :key="item.id" class="list-group-item" @click="selectItem(item)">
             <img v-lazy="item.avater" class="avater">
             <span class="name">{{ item.name | handleName}}</span>
           </li>
@@ -26,12 +26,16 @@
     <div class="list-fixed" v-show="fixedTitle" ref="fixed">
       <h1 class="fixed-title">{{ fixedTitle }}</h1>
     </div>
+    <div v-show="!data.length" class="loading-container">
+      <loading></loading>
+    </div>
   </scroll>
 </template>
 
 <script>
 import Scroll from '@/base/Scroll'
 import {getData} from '@/common/js/dom.js'
+import Loading from '@/base/Loading'
 
 // 快速入口的每个锚点高度
 const ANCHOR_HEIGHT = 18
@@ -70,7 +74,8 @@ export default {
     }
   },
   components: {
-    Scroll
+    Scroll,
+    Loading
   },
   filters: {
     handleName(name) {
@@ -83,8 +88,8 @@ export default {
     }
   },
   methods: {
-    undone() {
-      alert('在家过年呢，别急！')
+    selectItem(item) {
+      this.$emit('select', item)
     },
     onShortcutTouchStart(e) {
       let anchorIndex = getData(e.target, 'index')
@@ -157,6 +162,7 @@ export default {
     },
     diff(newVal) {
       let fixedTop = (newVal > 0 && newVal < TITLE_HEIGHT) ? newVal - TITLE_HEIGHT : 0
+      // 性能优化，减少dom操作
       if (this.fixedTop === fixedTop) return
       this.fixedTop = fixedTop
       this.$refs.fixed.style.transform = `translate3d(0, ${fixedTop}px, 0)`
