@@ -5,9 +5,10 @@
     </div>
     <h1 class="title" v-html="handleName"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
-      <div class="filter"></div>
+      <div class="filter" ref="filter"></div>
     </div>
-    <scroll :data="songs" class="list" ref="list">
+    <div class="bg-layer" ref="layer"></div>
+    <scroll @scroll="scroll" :data="songs" class="list" ref="list" :probe-type="probeType" :listen-scroll="listenScroll">
       <div class="song-list-wrapper">
         <song-list :songs="songs"></song-list>
       </div>
@@ -18,6 +19,9 @@
 <script>
 import Scroll from '@/base/Scroll'
 import SongList from '@/base/SongList'
+
+// 预留顶部的高度，不滚动到此处
+const RESERVED_HEIGHT = 40
 
 export default {
   props: {
@@ -34,6 +38,15 @@ export default {
       default: ''
     }
   },
+  data() {
+    return {
+      scrollY: 0
+    }
+  },
+  created() {
+    this.probeType = 3
+    this.listenScroll = true
+  },
   computed: {
     bgStyle() {
       return `background-image: url("${this.bgImage}")`
@@ -49,11 +62,52 @@ export default {
     }
   },
   mounted() {
+    this.imageHeight = this.$refs.bgImage.clientHeight
+    this.minTranslatrY = -this.imageHeight + RESERVED_HEIGHT
     this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
   },
   components: {
     Scroll,
     SongList
+  },
+  methods: {
+    scroll(pos) {
+      this.scrollY = pos.y
+      console.log(this.scrollY)
+    }
+  },
+  watch: {
+    scrollY(newY) {
+      // 最大滚动距离为minminTranslatrY，也就是歌手详情页歌手图片的高度
+      let translateY = Math.max(this.minTranslatrY, newY)
+      let zIndex = 0
+      let scale = 1
+      let blur = 0
+      this.$refs.layer.style[`transform`] = `translate3d(0, ${translateY}px, 0)`
+      this.$refs.layer.style['webkitTransform'] = `translate3d(0, ${translateY}px, 0)`
+      // 滑动的比例
+      const percent = Math.abs(newY / this.imageHeight)
+      if (newY > 0) {
+        scale = 1 + percent
+        zIndex = 10
+      } else {
+        blur = Math.min(20 * percent, 20)
+      }
+      this.$refs.filter.style['filter'] =`blur(${blur}px)`
+      this.$refs.filter.style['webkitBackdrop-filter'] =`blur(${blur})`
+      if (newY < this.minTranslatrY) {
+        zIndex = 10
+        this.$refs.bgImage.style.paddingTop = 0
+        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
+      } else {
+        // 重置回去
+        this.$refs.bgImage.style.paddingTop = '70%'
+        this.$refs.bgImage.style.height = '0'
+      }
+      this.$refs.bgImage.style.zIndex = zIndex
+      this.$refs.bgImage.style[`transform`] = `scale(${scale})`
+      this.$refs.bgImage.style['webkitTransform'] = `scale(${scale})`
+    }
   }
 }
 </script>
@@ -146,7 +200,7 @@ export default {
     position: absolute;
     top: 0;
     bottom: 0;
-    overflow: hidden;
+    // overflow: hidden;
     width: 100%;
     background: $color-background;
   }
