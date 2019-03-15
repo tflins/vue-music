@@ -1,8 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="singer-detail">
-      <h1>歌手详情</h1>
-    </div>
+    <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
   </transition>
 </template>
 
@@ -11,6 +9,7 @@ import {mapGetters} from 'vuex'
 import {getSingerDetail} from '@/api/singer'
 import {ERR_OK} from '@/api/config'
 import {createSong} from '@/common/js/SongClass'
+import MusicList from '@/components/MusicList'
 
 export default {
   data() {
@@ -22,21 +21,28 @@ export default {
   computed: {
     ...mapGetters([
       'singer'
-    ])
+    ]),
+    title() {
+      return this.singer.name
+    },
+    bgImage() {
+      return this.singer.avater
+    }
   },
   created() {
     this._getSingerDetail()
   },
+  components: {
+    MusicList
+  },
   methods: {
     _getSingerDetail() {
       if (!this.singer.id) {
-        console.log(this.singer.id)
         this.$router.push('/singer')
         return
       }
       getSingerDetail(this.singer.id).then(res => {
         if (res.code === ERR_OK) {
-          console.log('ddd')
           this.songs = this._formatSongs(res.data.list)
           console.log(this.songs)
         }
@@ -56,16 +62,6 @@ export default {
 
 <style lang="scss">
 @import "@/common/scss/const.scss";
-
-.singer-detail {
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: $color-background;
-}
 
 .slide-enter-active, .slide-leave-active {
   transition: all 0.3s;
