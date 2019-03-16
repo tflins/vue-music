@@ -1,9 +1,12 @@
 <template>
+  <transition name="slide">
   <div class="recommend-detail">
     <div class="back">
       <i class="icon-back" @click="back"></i>
     </div>
+    <h1>歌单详情</h1>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -40,5 +43,15 @@ export default {
       color: $color-theme;
     }
   }
+  h1 {
+    margin-left: 100px;
+  }
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0)
 }
 </style>
