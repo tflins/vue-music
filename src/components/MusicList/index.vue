@@ -19,9 +19,12 @@
 <script>
 import Scroll from '@/base/Scroll'
 import SongList from '@/base/SongList'
+import {prefixStyle} from '@/common/js/dom'
 
 // 预留顶部的高度，不滚动到此处
 const RESERVED_HEIGHT = 40
+const transform = prefixStyle('transform')
+const backdrop = prefixStyle('backdrop-filter')
 
 export default {
   props: {
@@ -93,8 +96,7 @@ export default {
       } else {
         blur = Math.min(20 * percent, 20)
       }
-      this.$refs.filter.style['filter'] =`blur(${blur}px)`
-      this.$refs.filter.style['webkitBackdrop-filter'] =`blur(${blur})`
+      this.$refs.filter.style[backdrop] = `blur(${blur}px)`
       if (newY < this.minTranslatrY) {
         zIndex = 10
         this.$refs.bgImage.style.paddingTop = 0
@@ -105,8 +107,7 @@ export default {
         this.$refs.bgImage.style.height = '0'
       }
       this.$refs.bgImage.style.zIndex = zIndex
-      this.$refs.bgImage.style[`transform`] = `scale(${scale})`
-      this.$refs.bgImage.style['webkitTransform'] = `scale(${scale})`
+      this.$refs.bgImage.style[transform] = `scale(${scale})`
     }
   }
 }
