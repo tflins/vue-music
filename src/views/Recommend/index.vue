@@ -1,5 +1,6 @@
 <template>
   <div class="recommend">
+    <router-view></router-view>
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
         <div v-if="recommends.length" class="slider-wrapper">
@@ -80,8 +81,7 @@ export default {
     },
 
     undone(data) {
-      alert('在家过年呢，别急！')
-      console.log(data)
+      this.$router.push('/recommend/recommenddetail')
     }
   },
   components: {
