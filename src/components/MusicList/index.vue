@@ -5,12 +5,21 @@
     </div>
     <h1 class="title" v-html="handleName"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
+      <div class="play-wrapper" v-show="songs.length" ref="playBtn">
+        <div class="play">
+          <i class="icon-play"></i>
+          <span class="text">随机播放</span>
+        </div>
+      </div>
       <div class="filter" ref="filter"></div>
     </div>
     <div class="bg-layer" ref="layer"></div>
     <scroll @scroll="scroll" :data="songs" class="list" ref="list" :probe-type="probeType" :listen-scroll="listenScroll">
       <div class="song-list-wrapper">
         <song-list :songs="songs"></song-list>
+      </div>
+      <div class="loading-container" v-show="!songs.length">
+        <loading></loading>
       </div>
     </scroll>
   </div>
@@ -20,6 +29,7 @@
 import Scroll from '@/base/Scroll'
 import SongList from '@/base/SongList'
 import {prefixStyle} from '@/common/js/dom'
+import Loading from '@/base/Loading'
 
 // 预留顶部的高度，不滚动到此处
 const RESERVED_HEIGHT = 40
@@ -71,12 +81,12 @@ export default {
   },
   components: {
     Scroll,
-    SongList
+    SongList,
+    Loading
   },
   methods: {
     scroll(pos) {
       this.scrollY = pos.y
-      console.log(this.scrollY)
     },
     back() {
       this.$router.back()
@@ -104,10 +114,12 @@ export default {
         zIndex = 10
         this.$refs.bgImage.style.paddingTop = 0
         this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
+        this.$refs.playBtn.style.display = 'none'
       } else {
         // 重置回去
         this.$refs.bgImage.style.paddingTop = '70%'
         this.$refs.bgImage.style.height = '0'
+        this.$refs.playBtn.style.display = ''
       }
       this.$refs.bgImage.style.zIndex = zIndex
       this.$refs.bgImage.style[transform] = `scale(${scale})`
