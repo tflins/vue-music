@@ -1,7 +1,7 @@
 <template>
   <div class="music-list">
     <div class="back">
-      <i class="icon-back"></i>
+      <i class="icon-back" @click="back"></i>
     </div>
     <h1 class="title" v-html="handleName"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
@@ -56,12 +56,12 @@ export default {
     },
     handleName() {
       const nameDictionary = {
-        '薛之谦': '(傻逼歌手)',
-        '周杰伦': '(华语第一)',
-        '林俊杰': '(华语之光)',
-        'TFBOYS': '(掏粪男孩)'
+        '薛之谦': '打胎歌手',
+        '周杰伦': '周杰伦 (华语第一)',
+        '林俊杰': '林俊杰 (华语之光)',
+        'TFBOYS': '掏粪男孩'
       }
-      return `${this.title}${nameDictionary[this.title] || ''}`
+      return `${nameDictionary[this.title] || ''}`
     }
   },
   mounted() {
@@ -77,6 +77,9 @@ export default {
     scroll(pos) {
       this.scrollY = pos.y
       console.log(this.scrollY)
+    },
+    back() {
+      this.$router.back()
     }
   },
   watch: {
