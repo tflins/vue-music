@@ -1,7 +1,35 @@
 <template>
   <div class="player" v-show="playList.length">
     <div class="normal-player" v-show="fullScreen">
-      <h1>播放器</h1>
+      <div class="background">
+        <img width="100%" height="100%">
+      </div>
+      <div class="top">
+        <div class="back">
+          <i class="icon-back"></i>
+        </div>
+        <h1 class="title"></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      <div class="middle">
+        <div class="middle-l">
+          <div class="cd-wrapper">
+            <div class="cd">
+              <img class="image">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="operators">
+          <div class="icon i-left">
+            <i class="icon-sequence"></i>
+          </div>
+          <div class="icon i-left">
+            <i class="icon-prev"></i>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="mini-player" v-show="!fullScreen"></div>
   </div>

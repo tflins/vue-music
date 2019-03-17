@@ -141,6 +141,7 @@ export default {
 <style lang="scss">
 @import '@/common/scss/mixin.scss';
 @import '@/common/scss/const.scss';
+
 .music-list {
   position: fixed;
   height: 100%;
