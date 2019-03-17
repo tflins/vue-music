@@ -28,10 +28,30 @@
           <div class="icon i-left">
             <i class="icon-prev"></i>
           </div>
+          <div class="icon i-center">
+            <i class="icon-play"></i>
+          </div>
+          <div class="icon i-right">
+            <i class="icon-next"></i>
+          </div>
+          <div class="icon i-right">
+            <i class="icon-not-favorite"></i>
+          </div>
         </div>
       </div>
     </div>
-    <div class="mini-player" v-show="!fullScreen"></div>
+    <div class="mini-player" v-show="!fullScreen">
+      <div class="icon">
+        <img width="40" height="40">
+      </div>
+      <div class="text">
+        <h2 class="name"></h2>
+        <p class="desc"></p>
+      </div>
+      <div class="control">
+        <i class="icon-playlist"></i>
+      </div>
+    </div>
   </div>
 </template>
 
