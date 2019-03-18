@@ -2,20 +2,20 @@
   <div class="player" v-show="playList.length">
     <div class="normal-player" v-show="fullScreen">
       <div class="background">
-        <img width="100%" height="100%">
+        <img width="100%" height="100%" :src="currentSong.image">
       </div>
       <div class="top">
-        <div class="back">
+        <div class="back" @click="back">
           <i class="icon-back"></i>
         </div>
-        <h1 class="title"></h1>
-        <h2 class="subtitle"></h2>
+        <h1 class="title" v-html="currentSong.name"></h1>
+        <h2 class="subtitle" v-html="currentSong.singer"></h2>
       </div>
       <div class="middle">
         <div class="middle-l">
-          <div class="cd-wrapper">
+          <div class="cd-warpper">
             <div class="cd">
-              <img class="image">
+              <img class="image" :src="currentSong.image">
             </div>
           </div>
         </div>
@@ -40,13 +40,13 @@
         </div>
       </div>
     </div>
-    <div class="mini-player" v-show="!fullScreen">
+    <div class="mini-player" v-show="!fullScreen" @click="open">
       <div class="icon">
-        <img width="40" height="40">
+        <img width="40" height="40" :src="currentSong.image">
       </div>
       <div class="text">
-        <h2 class="name"></h2>
-        <p class="desc"></p>
+        <h2 class="name" v-html="currentSong.name"></h2>
+        <p class="desc" v-html="currentSong.singer"></p>
       </div>
       <div class="control">
         <i class="icon-playlist"></i>
@@ -56,21 +56,33 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   computed: {
     ...mapGetters([
       'fullScreen',
-      'playList'
+      'playList',
+      'currentSong'
     ])
+  },
+  methods: {
+    back() {
+      this.setFullSrceen(false)
+    },
+    open() {
+      this.setFullSrceen(true)
+    },
+    ...mapMutations({
+      setFullSrceen: 'SET_FULL_SCREEN'
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/common/scss/mixin.scss";
-@import "@/common/scss/const.scss";
+@import '@/common/scss/mixin.scss';
+@import '@/common/scss/const.scss';
 
 .player {
   .normal-player {
@@ -92,7 +104,9 @@ export default {
       filter: blur(20px);
     }
     .top {
-      .mini-to-player {
+      position: relative;
+      margin-bottom: 25px;
+      .back {
         position: absolute;
         top: 0;
         left: 6px;
@@ -356,7 +370,7 @@ export default {
           font-size: 32px;
           position: absolute;
           left: 0;
-          top: 0;
+          top: 0
         }
       }
     }
