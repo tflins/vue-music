@@ -10,7 +10,7 @@ import RecommendDetail from '@/views/RecommendDetail'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -50,3 +50,12 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login' && !localStorage.token) {
+    return next('/login')
+  }
+  next()
+})
+
+export default router
