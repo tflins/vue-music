@@ -6,10 +6,10 @@
     </div>
     <div class="input-wrapper">
       <label>
-        <input type="text" placeholder="E-mail">
+        <input type="text" placeholder="E-mail" autocomplete="off">
       </label>
       <label>
-        <input type="text" placeholder="密码">
+        <input type="password" placeholder="密码" autocomplete="new-password">
       </label>
     </div>
     <div class="button-group">
@@ -61,11 +61,18 @@ export default {}
       border: 0;
       outline: 0;
       background: transparent;
-      border-bottom: 2px solid #fff;
+      border-bottom: 2px solid $color-text-ll;
       width: 70%;
-      color: $color-text;
+      color: $color-text-ll;
       font-size: $font-size-large-x;
       margin: 20px;
+    }
+    input::-ms-input-placeholder {
+      text-align: center;
+    }
+    input::-webkit-input-placeholder {
+      text-align: center;
+      color: $color-text-d;
     }
   }
   .button-group {
@@ -77,7 +84,7 @@ export default {}
       font-size: $font-size-large-x;
       border-radius: 4px;
       background-color: $color-highlight-background;
-      color: $color-text;
+      color: $color-text-l;
       outline: none;
     }
   }
