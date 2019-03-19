@@ -6,21 +6,55 @@
     </div>
     <div class="input-wrapper">
       <label>
-        <input type="text" placeholder="E-mail" autocomplete="off">
+        <input type="text" placeholder="E-mail" autocomplete="off" v-model="email">
       </label>
       <label>
-        <input type="password" placeholder="密码" autocomplete="new-password">
+        <input type="password" placeholder="密码" autocomplete="new-password" v-model="password">
       </label>
     </div>
     <div class="button-group">
-      <button>登 录</button>
+      <button @click="_login">登 录</button>
       <button>注 册</button>
+    </div>
+    <div>
+      <br>
+      <center>
+        <p>测试邮箱：tflins@163.com</p>
+        <br>
+        <p>密码：123456</p>
+      </center>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import {login} from '@/api/user'
+// import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    _login() {
+      const userInfo = {
+        email: this.email,
+        password: this.password
+      }
+      login(userInfo).then(res => {
+        if (res.success) {
+          localStorage.setItem('token', res.token)
+          location.replace('/')
+        }
+      }).catch(err => {
+        throw err
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss">
