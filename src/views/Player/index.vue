@@ -129,7 +129,7 @@ export default {
       const paddingLeft = 40
       const paddingBottom = 30
       const paddingTop = 80
-      const width = window.innerHeight * 0.8
+      const width = window.innerWidth * 0.8
       const scale = targetWidth / width
       const x = -(window.innerWidth / 2 - paddingLeft)
       const y = window.innerHeight - paddingTop - width / 2 - paddingBottom
