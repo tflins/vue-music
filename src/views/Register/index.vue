@@ -2,55 +2,48 @@
   <div class="login">
     <div class="logo">
       <div class="icon"></div>
-      <div class="logo-desc">音 悦</div>
+      <div class="logo-desc">注 册</div>
     </div>
     <div class="input-wrapper">
       <label>
         <input type="text" placeholder="E-mail" autocomplete="off" v-model="email">
       </label>
       <label>
+        <input type="text" placeholder="用户名" autocomplete="off" v-model="name">
+      </label>
+      <label>
         <input type="password" placeholder="密码" autocomplete="new-password" v-model="password">
       </label>
     </div>
     <div class="button-group">
-      <button @click="_login">登 录</button>
-      <router-link to="/register">
-        <button>注 册</button>
+      <button @click="_register">注 册</button>
+      <router-link to="/login">
+        <button>登 录</button>
       </router-link>
-    </div>
-    <div>
-      <br>
-      <center>
-        <p>测试邮箱：tflins@163.com</p>
-        <br>
-        <p>密码：123456</p>
-      </center>
     </div>
   </div>
 </template>
 
 <script>
-import {login} from '@/api/user'
-// import axios from 'axios'
+import {register} from '@/api/user'
 
 export default {
   data() {
     return {
       email: '',
+      name: '',
       password: ''
     }
   },
   methods: {
-    _login() {
+    _register() {
       const userInfo = {
+        name: this.name,
         email: this.email,
         password: this.password
       }
-      login(userInfo).then(res => {
-        if (res.success) {
-          localStorage.setItem('token', res.token)
-          location.replace('/')
-        }
+      register(userInfo).then(res => {
+        console.log(res)
       }).catch(err => {
         throw err
       })

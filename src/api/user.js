@@ -14,3 +14,18 @@ export function login(userInfo) {
       throw err
     })
 }
+
+export function register(userInfo) {
+  const url = 'http://localhost:5000/api/users/register'
+
+  const data = Object.assign({}, userInfo)
+
+  return axios
+    .post(url, data)
+    .then(response => {
+      return Promise.resolve(response.data)
+    })
+    .catch(err => {
+      throw err
+    })
+}

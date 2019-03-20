@@ -7,6 +7,7 @@ import Singer from '@/views/Singer'
 import Login from '@/views/Login'
 import SingerDetail from '@/views/SingerDetail'
 import RecommendDetail from '@/views/RecommendDetail'
+import Register from '@/views/Register'
 
 Vue.use(Router)
 
@@ -47,12 +48,16 @@ const router = new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/register',
+      component: Register
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== '/login' && !localStorage.token) {
+  if (to.path !== '/login' && !localStorage.token && to.path !== '/register') {
     return next('/login')
   }
   next()
