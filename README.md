@@ -62,8 +62,7 @@ npm run build
 ## 部分截图
 
 <center class="half">
-    <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g19fn9pcbyg30ck0m84qq.gif" width="300"/>
-    <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g1arr5b5thg30ci0m6e81.gif" width="300"/>
+    <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g19fn9pcbyg30ck0m84qq.gif" width="300"/> <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g1arr5b5thg30ci0m6e81.gif" width="300"/>
 </center>
 
 ---
