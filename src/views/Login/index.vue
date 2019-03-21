@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="logo">
-      <div class="icon"></div>
+      <!-- <div class="icon"></div> -->
       <div class="logo-desc">音 悦</div>
     </div>
     <div class="input-wrapper">

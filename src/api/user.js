@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export function login(userInfo) {
-  const url = 'http://120.79.235.74:5000/api/users/login'
+  const url = 'http://localhost:5000/api/users/login'
 
   const data = Object.assign({}, userInfo)
 
@@ -16,7 +16,7 @@ export function login(userInfo) {
 }
 
 export function register(userInfo) {
-  const url = 'http://120.79.235.74:5000/api/users/register'
+  const url = 'http://localhost:5000/api/users/register'
 
   const data = Object.assign({}, userInfo)
 
