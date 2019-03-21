@@ -51,17 +51,21 @@ npm run build
 - [x] 歌手信息
 - [x] 播放组件
 - [x] 歌单推荐
-- [] 搜索歌曲
-- [] 歌曲排行
-- [] 分享歌单
-- [] 歌单评论
-- [] 用户管理
+- [ ] 搜索歌曲
+- [ ] 歌曲排行
+- [ ] 分享歌单
+- [ ] 歌单评论
+- [ ] 用户管理
 
 ---
 
 ## 部分截图
 
-![登录](http://ww1.sinaimg.cn/large/006iQgpIly1g19fn9pcbyg30ck0m84qq.gif)  ![演示](http://ww1.sinaimg.cn/large/006iQgpIly1g1arr5b5thg30ci0m6e81.gif)
+<center class="half">
+    <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g19fn9pcbyg30ck0m84qq.gif" width="300"/>
+    <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g1arr5b5thg30ci0m6e81.gif" width="300"/>
+</center>
+
 ---
 
 ## 演示地址（实时更新）
