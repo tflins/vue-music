@@ -35,7 +35,7 @@
               <i class="icon-prev"></i>
             </div>
             <div class="icon i-center">
-              <i class="icon-play"></i>
+              <i @click="togglePlaying" :class="playIcon"></i>
             </div>
             <div class="icon i-right">
               <i class="icon-next"></i>
@@ -57,10 +57,14 @@
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
         <div class="control">
+          <i @click.stop="togglePlaying" :class="miniPlayIcon"></i>
+        </div>
+        <div class="control">
           <i class="icon-playlist"></i>
         </div>
       </div>
     </transition>
+    <audio ref="audio" :src="currentSong.url"></audio>
   </div>
 </template>
 
@@ -73,7 +77,13 @@ const transform = prefixStyle('transform')
 
 export default {
   computed: {
-    ...mapGetters(['fullScreen', 'playList', 'currentSong'])
+    ...mapGetters(['fullScreen', 'playList', 'currentSong', 'playing']),
+    playIcon() {
+      return this.playing ? 'icon-pause' : 'icon-play'
+    },
+    miniPlayIcon() {
+      return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
+    }
   },
   methods: {
     back() {
@@ -83,7 +93,8 @@ export default {
       this.setFullSrceen(true)
     },
     ...mapMutations({
-      setFullSrceen: 'SET_FULL_SCREEN'
+      setFullSrceen: 'SET_FULL_SCREEN',
+      setPlayingState: 'SET_PLAYING_STATE'
     }),
     enter(el, done) {
       const { x, y, scale } = this._getPosAndScale()
@@ -138,6 +149,22 @@ export default {
         y,
         scale
       }
+    },
+    togglePlaying() {
+      this.setPlayingState(!this.playing)
+    }
+  },
+  watch: {
+    currentSong() {
+      this.$nextTick(() => {
+        this.$refs.audio.play()
+      })
+    },
+    playing(newPlaying) {
+      const audio = this.$refs.audio
+      this.$nextTick(() => {
+        newPlaying ? audio.play() : audio.pause()
+      })
     }
   }
 }
