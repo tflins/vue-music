@@ -25,6 +25,8 @@ git clone https://github.com/tflins/music-koa-server.git
 
 cd music-koa-server
 
+npm install
+
 npm run start
 
 // 如果想热更新
@@ -37,6 +39,8 @@ npm run server
 git clone https://github.com/tflins/vue-music.git
 
 cd vue-music
+
+npm install
 
 npm run start
 
@@ -65,7 +69,7 @@ npm run build
     <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g19fn9pcbyg30ck0m84qq.gif" width="300"/> <img src="http://ww1.sinaimg.cn/large/006iQgpIly1g1arr5b5thg30ci0m6e81.gif" width="300"/>
 </center>
 
----
+---build
 
 ## 演示地址（实时更新）
 
