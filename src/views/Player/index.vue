@@ -20,7 +20,7 @@
         <div class="middle">
           <div class="middle-l">
             <div class="cd-warpper" ref="cdWarpper">
-              <div class="cd">
+              <div class="cd" :class="cdCls">
                 <img class="image" :src="currentSong.image">
               </div>
             </div>
@@ -83,6 +83,9 @@ export default {
     },
     miniPlayIcon() {
       return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
+    },
+    cdCls() {
+      return this.playing ? 'play' : 'paly pause'
     }
   },
   methods: {
