@@ -44,6 +44,11 @@ export default {
       }
       register(userInfo).then(res => {
         console.log(res)
+        if (res.success) {
+          alert('注册成功！')
+        } else {
+          alert(res.msg)
+        }
       }).catch(err => {
         throw err
       })
