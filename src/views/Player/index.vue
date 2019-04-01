@@ -31,13 +31,13 @@
             <div class="icon i-left">
               <i class="icon-sequence"></i>
             </div>
-            <div class="icon i-left">
+            <div class="icon i-left" :class="disableCls">
               <i class="icon-prev" @click="prev"></i>
             </div>
-            <div class="icon i-center">
+            <div class="icon i-center" :class="disableCls">
               <i @click="togglePlaying" :class="playIcon"></i>
             </div>
-            <div class="icon i-right">
+            <div class="icon i-right" :class="disableCls">
               <i class="icon-next" @click="next"></i>
             </div>
             <div class="icon i-right">
@@ -64,7 +64,7 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="currentSong.url" @canplay="ready"></audio>
+    <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error"></audio>
   </div>
 </template>
 
@@ -91,6 +91,9 @@ export default {
     },
     cdCls() {
       return this.playing ? 'play' : 'play pause'
+    },
+    disableCls() {
+      return this.songReady ? '' : 'disable'
     }
   },
   methods: {
@@ -206,6 +209,10 @@ export default {
       this.songReady = false
     },
     ready() {
+      this.songReady = true
+    },
+    // 当歌曲加载失败时
+    error() {
       this.songReady = true
     }
   },
