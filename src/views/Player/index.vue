@@ -32,13 +32,13 @@
               <i class="icon-sequence"></i>
             </div>
             <div class="icon i-left">
-              <i class="icon-prev"></i>
+              <i class="icon-prev" @click="prev"></i>
             </div>
             <div class="icon i-center">
               <i @click="togglePlaying" :class="playIcon"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon-next"></i>
+              <i class="icon-next" @click="next"></i>
             </div>
             <div class="icon i-right">
               <i class="icon-not-favorite"></i>
@@ -77,7 +77,7 @@ const transform = prefixStyle('transform')
 
 export default {
   computed: {
-    ...mapGetters(['fullScreen', 'playList', 'currentSong', 'playing']),
+    ...mapGetters(['fullScreen', 'playList', 'currentSong', 'playing', 'currentIndex']),
     playIcon() {
       return this.playing ? 'icon-pause' : 'icon-play'
     },
@@ -97,7 +97,8 @@ export default {
     },
     ...mapMutations({
       setFullSrceen: 'SET_FULL_SCREEN',
-      setPlayingState: 'SET_PLAYING_STATE'
+      setPlayingState: 'SET_PLAYING_STATE',
+      setCurrentIndex: 'SET_CURRENT_INDEX'
     }),
     enter(el, done) {
       const { x, y, scale } = this._getPosAndScale()
@@ -153,8 +154,40 @@ export default {
         scale
       }
     },
+    /**
+     * 播放 / 暂停
+     */
     togglePlaying() {
       this.setPlayingState(!this.playing)
+    },
+    /**
+     * 播放下一首
+     */
+    next() {
+      let index = this.currentIndex + 1
+      // 顺序播放，当为列表最后一首歌的时候，跳转至第一首歌曲
+      if (index === this.playList.length) {
+        index = 0
+      }
+      this.setCurrentIndex(index)
+      // 若当前，为暂停状态，改为播放
+      if (!this.playing) {
+        this.togglePlaying()
+      }
+    },
+    /**
+     * 播放上一首
+     */
+    prev() {
+      let index = this.currentIndex - 1
+      // 第一首，跳至最后一首
+      if (index === -1) {
+        index = this.playList.length - 1
+      }
+      this.setCurrentIndex(index)
+      if (!this.playing) {
+        this.togglePlaying()
+      }
     }
   },
   watch: {
