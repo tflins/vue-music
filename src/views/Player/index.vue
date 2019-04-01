@@ -64,7 +64,7 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="currentSong.url"></audio>
+    <audio ref="audio" :src="currentSong.url" @canplay="ready"></audio>
   </div>
 </template>
 
@@ -76,6 +76,11 @@ import {prefixStyle} from '@/common/js/dom'
 const transform = prefixStyle('transform')
 
 export default {
+  data() {
+    return {
+      songReady: false
+    }
+  },
   computed: {
     ...mapGetters(['fullScreen', 'playList', 'currentSong', 'playing', 'currentIndex']),
     playIcon() {
@@ -158,12 +163,18 @@ export default {
      * 播放 / 暂停
      */
     togglePlaying() {
+      if (!this.songReady) {
+        return
+      }
       this.setPlayingState(!this.playing)
     },
     /**
      * 播放下一首
      */
     next() {
+      if (!this.songReady) {
+        return
+      }
       let index = this.currentIndex + 1
       // 顺序播放，当为列表最后一首歌的时候，跳转至第一首歌曲
       if (index === this.playList.length) {
@@ -174,11 +185,15 @@ export default {
       if (!this.playing) {
         this.togglePlaying()
       }
+      this.songReady = false
     },
     /**
      * 播放上一首
      */
     prev() {
+      if (!this.songReady) {
+        return
+      }
       let index = this.currentIndex - 1
       // 第一首，跳至最后一首
       if (index === -1) {
@@ -188,6 +203,10 @@ export default {
       if (!this.playing) {
         this.togglePlaying()
       }
+      this.songReady = false
+    },
+    ready() {
+      this.songReady = true
     }
   },
   watch: {
