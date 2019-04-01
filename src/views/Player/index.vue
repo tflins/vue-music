@@ -85,7 +85,7 @@ export default {
       return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
     },
     cdCls() {
-      return this.playing ? 'play' : 'paly pause'
+      return this.playing ? 'play' : 'play pause'
     }
   },
   methods: {
