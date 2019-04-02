@@ -113,6 +113,9 @@ export default {
   methods: {
     onPercentChange(percent) {
       this.$refs.audio.currentTime = this.currentSong.duration * percent
+      if (!this.playing) {
+        this.togglePlaying()
+      }
     },
     format(interval) {
       interval = interval | 0
