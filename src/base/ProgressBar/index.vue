@@ -2,7 +2,12 @@
   <div class="progress-bar" ref="progressBar">
     <div class="bar-inner">
       <div class="progress" ref="progress"></div>
-      <div class="progress-btn-wrapper" ref="progressBtn">
+      <div class="progress-btn-wrapper"
+           ref="progressBtn"
+           @touchstart.prevent="progressTouchStart"
+           @touchmove.prevent="progressTouchMove"
+           @touchend.prevent="progressTouchEnd"
+      >
         <div class="progress-btn"></div>
       </div>
     </div>
@@ -28,9 +33,37 @@ export default {
       if (newPrecent >= 0) {
         const barWidth = this.$refs.progressBar.clientWidth - PROGRESS_BTN_WIDTH
         const offsetWidth = newPrecent * barWidth
-        this.$refs.progress.style.width = `${offsetWidth}px`
-        this.$refs.progressBtn.style[transform] = `translateX(${offsetWidth}px)`
+        this._offest(offsetWidth)
       }
+    }
+  },
+  created() {
+    // 用于各个函数间共享的数据
+    this.touch = {}
+  },
+  methods: {
+    progressTouchStart(e) {
+      this.touch.initiated = true
+      this.touch.startX = e.touches[0].pageX
+      this.touch.left = this.$refs.progress.clientWidth
+    },
+    progressTouchMove(e) {
+      // 未经过 TouchStart 则 return
+      if (!this.touch.initiated) {
+        return
+      }
+      // 偏移量
+      const deltaX = e.touches[0].pageX - this.touch.startX
+      const offsetWidth = Math.max(0, this.touch.left + deltaX)
+      this._offest(offsetWidth)
+    },
+    progressTouchEnd() {
+      this.touch.initiated = false
+    },
+    _offest(offsetWidth) {
+      this.$refs.progress.style.width = `${offsetWidth}px`
+      this.$refs.progressBtn.style[transform] = `translateX(${offsetWidth}px)`
+      this.$refs.progressBtn.style[transform] = `translateX(${offsetWidth}px)`
     }
   }
 }
