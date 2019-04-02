@@ -30,7 +30,7 @@ export default {
   },
   watch: {
     precent(newPrecent) {
-      if (newPrecent >= 0) {
+      if (newPrecent >= 0 && !this.touch.initiated) {
         const barWidth = this.$refs.progressBar.clientWidth - PROGRESS_BTN_WIDTH
         const offsetWidth = newPrecent * barWidth
         this._offest(offsetWidth)
@@ -59,6 +59,13 @@ export default {
     },
     progressTouchEnd() {
       this.touch.initiated = false
+      // 派发一个事件，告诉外部组件，滑动到哪里
+      this._triggerPerent()
+    },
+    _triggerPerent() {
+      const barWidth = this.$refs.progressBar.clientWidth - PROGRESS_BTN_WIDTH
+      const perent = this.$refs.progress.clientWidth / barWidth
+      this.$emit('percentChange', perent)
     },
     _offest(offsetWidth) {
       this.$refs.progress.style.width = `${offsetWidth}px`
