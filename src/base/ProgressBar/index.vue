@@ -1,5 +1,5 @@
 <template>
-  <div class="progress-bar" ref="progressBar">
+  <div class="progress-bar" ref="progressBar" @click="progressClick">
     <div class="bar-inner">
       <div class="progress" ref="progress"></div>
       <div class="progress-btn-wrapper"
@@ -42,6 +42,10 @@ export default {
     this.touch = {}
   },
   methods: {
+    progressClick(e) {
+      this._offest(e.offsetX)
+      this._triggerPerent()
+    },
     progressTouchStart(e) {
       this.touch.initiated = true
       this.touch.startX = e.touches[0].pageX
