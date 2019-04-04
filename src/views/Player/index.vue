@@ -35,9 +35,9 @@
             <span class="time time-r">{{ format(currentSong.duration) }}</span>
           </div>
           <div class="operators">
-            <div class="icon i-left">
+            <!-- <div class="icon i-left">
               <i class="icon-sequence"></i>
-            </div>
+            </div> -->
             <div class="icon i-left" :class="disableCls">
               <i class="icon-prev" @click="prev"></i>
             </div>
