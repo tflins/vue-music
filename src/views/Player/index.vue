@@ -30,7 +30,7 @@
           <div class="progress-wrapper">
             <span class="time time-l">{{ format(currentTime) }}</span>
             <div class="progress-bar-wrapper">
-              <progress-bar :precent="precent" @percentChange="onPercentChange"></progress-bar>
+              <progress-bar :percent="percent" @percentChange="onPercentChange"></progress-bar>
             </div>
             <span class="time time-r">{{ format(currentSong.duration) }}</span>
           </div>
@@ -64,7 +64,9 @@
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
         <div class="control">
-          <i @click.stop="togglePlaying" :class="miniPlayIcon"></i>
+          <progress-circle :radius="radius" :percent="percent">
+            <i @click.stop="togglePlaying" :class="miniPlayIcon" class="icon-mini"></i>
+          </progress-circle>
         </div>
         <div class="control">
           <i class="icon-playlist"></i>
@@ -80,6 +82,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import animations from 'create-keyframe-animation'
 import {prefixStyle} from '@/common/js/dom'
 import ProgressBar from '@/base/ProgressBar'
+import ProgressCircle from '@/base/ProgressCircle'
 
 const transform = prefixStyle('transform')
 
@@ -88,7 +91,9 @@ export default {
     return {
       songReady: false,
       // 当前歌曲播放时长
-      currentTime: 0
+      currentTime: 0,
+      // 播放圆形进度条半径
+      radius: 32
     }
   },
   computed: {
@@ -106,7 +111,7 @@ export default {
       return this.songReady ? '' : 'disable'
     },
     // 进度条比例
-    precent() {
+    percent() {
       return this.currentTime / this.currentSong.duration
     }
   },
@@ -267,7 +272,8 @@ export default {
     }
   },
   components: {
-    ProgressBar
+    ProgressBar,
+    ProgressCircle
   }
 }
 </script>

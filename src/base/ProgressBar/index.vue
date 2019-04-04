@@ -23,16 +23,16 @@ const transform = prefixStyle('transform')
 export default {
   name: 'ProgressBar',
   props: {
-    precent: {
+    percent: {
       type: Number,
       default: 0
     }
   },
   watch: {
-    precent(newPrecent) {
-      if (newPrecent >= 0 && !this.touch.initiated) {
+    percent(newPercent) {
+      if (newPercent >= 0 && !this.touch.initiated) {
         const barWidth = this.$refs.progressBar.clientWidth - PROGRESS_BTN_WIDTH
-        const offsetWidth = newPrecent * barWidth
+        const offsetWidth = newPercent * barWidth
         this._offest(offsetWidth)
       }
     }
