@@ -8,11 +8,17 @@
         <span>用户中心</span>
       </div>
       <div class="btn-wrapper" style="">
+        <div class="btn">
+          <span class="text">我的歌单</span>
+        </div>
         <div class="btn" @click="createSongList">
           <span class="text">创建歌单</span>
         </div>
         <div class="btn" @click="updataPassword">
           <span class="text">修改密码</span>
+        </div>
+        <div class="btn">
+          <span class="text">退出登录</span>
         </div>
       </div>
       <div class="song-list">
