@@ -15,20 +15,52 @@
           <span class="text">修改密码</span>
         </div>
       </div>
+      <div class="song-list">
+        <dialog-component :is-show="showCreateSongList" @on-close="closeDialog">
+          <div slot="header">请输入歌单信息</div>
+          <div class="dialog_publish_main" slot="main">
+            <label>
+              歌单名称:
+              <input type="text" name="" id="">
+            </label>
+            <br/>
+            <label>
+              歌单描述:
+              <input type="text" name="" id="">
+            </label>
+            <br/>
+            <button>保存</button>
+          </div>
+        </dialog-component>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
+import Dialog from '@/base/Dialog'
+
 export default {
   name: 'UserCenter',
+  data() {
+    return {
+      showCreateSongList: false
+    }
+  },
   methods: {
     back() {
       this.$router.back()
     },
     createSongList() {
-      alert('das')
+      this.showCreateSongList = true
+    },
+    closeDialog() {
+      this.showCreateSongList = false
     }
+
+  },
+  components: {
+    'dialog-component': Dialog
   }
 }
 </script>
@@ -90,6 +122,11 @@ export default {
           vertical-align: middle;
           font-size: $font-size-medium-x;
         }
+      }
+    }
+    .song-list {
+      input {
+        margin-top: 10px;
       }
     }
 }
