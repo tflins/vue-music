@@ -1,19 +1,43 @@
 <template>
   <transition name="slide">
-  <div class="recommend-detail">
-    <div class="back">
-      <i class="icon-back" @click="back"></i>
-    </div>
-    <h1>歌单详情</h1>
-  </div>
+    <music-list :title="title" :bg-image="bgImage"></music-list>
   </transition>
 </template>
 
 <script>
+import MusicList from '@/components/MusicList'
+import {mapGetters} from 'vuex'
+import {getSongList} from '@/api/recommend'
+import {ERR_OK} from '@/api/config'
+
 export default {
+  created() {
+    this._getSongList()
+  },
   methods: {
     back() {
       this.$router.back()
+    },
+    _getSongList() {
+      getSongList(this.disc.dissid).then(res => {
+        if (ERR_OK === res.code) {
+          console.log(res.cdlist[0].songlist)
+        }
+      })
+    }
+  },
+  components: {
+    MusicList
+  },
+  computed: {
+    ...mapGetters([
+      'disc'
+    ]),
+    title() {
+      return this.disc.dissname
+    },
+    bgImage() {
+      return this.disc.imgurl
     }
   }
 }

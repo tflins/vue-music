@@ -72,7 +72,7 @@ export default {
         '林俊杰': '林俊杰 (华语之光)',
         'TFBOYS': '掏粪男孩'
       }
-      return `${nameDictionary[this.title] || ''}`
+      return `${nameDictionary[this.title] || this.title}`
     }
   },
   mounted() {

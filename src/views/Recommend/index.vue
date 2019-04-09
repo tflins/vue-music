@@ -1,6 +1,5 @@
 <template>
   <div class="recommend">
-    <router-view></router-view>
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
         <div v-if="recommends.length" class="slider-wrapper">
@@ -13,9 +12,9 @@
         </slider>
         </div>
         <div class="recommend-list">
-          <h1 class="list-title">热门歌单推荐</h1>
+          <h1 class="list-title">系统推荐歌单</h1>
           <ul>
-            <li class="item" v-for="item in discList" :key="item.dissid" @click="undone(item)">
+            <li class="item" v-for="item in discList" :key="item.dissid" @click="selectItem(item)">
               <div class="icon">
                 <img width="60" height="60" v-lazy="item.imgurl">
               </div>
@@ -31,6 +30,7 @@
         <loading></loading>
       </div>
     </scroll>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -40,6 +40,7 @@ import Loading from '@/base/Loading'
 import Scroll from '@/base/Scroll'
 import Slider from '@/base/Slider'
 import {ERR_OK} from '@/api/config'
+import {mapMutations} from 'vuex'
 
 export default {
   name: 'Recommend',
@@ -80,9 +81,15 @@ export default {
       this.isRefresh = true
     },
 
-    undone(data) {
-      this.$router.push('/recommend/recommenddetail')
-    }
+    selectItem(item) {
+      this.$router.push({
+        path: `/recommend/${item.dissid}`
+      })
+      this.setDisc(item)
+    },
+    ...mapMutations({
+      setDisc: 'SET_DISC'
+    })
   },
   components: {
     Slider,

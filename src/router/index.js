@@ -23,7 +23,7 @@ const router = new Router({
       component: Recommend,
       children: [
         {
-          path: 'recommenddetail',
+          path: ':id',
           component: RecommendDetail
         }
       ]
