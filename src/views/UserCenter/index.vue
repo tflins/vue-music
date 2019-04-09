@@ -11,12 +11,12 @@
         <div class="btn" @click="createSongList">
           <span class="text">创建歌单</span>
         </div>
-        <div class="btn">
+        <div class="btn" @click="updataPassword">
           <span class="text">修改密码</span>
         </div>
       </div>
       <div class="song-list">
-        <dialog-component :is-show="showCreateSongList" @on-close="closeDialog">
+        <dialog-component :is-show="showCreateSongList" @on-close="closeCreateSongListDialog">
           <div slot="header">请输入歌单信息</div>
           <div class="dialog_publish_main" slot="main">
             <label>
@@ -26,6 +26,29 @@
             <br/>
             <label>
               歌单描述:
+              <input type="text" name="" id="">
+            </label>
+            <br/>
+            <button>保存</button>
+          </div>
+        </dialog-component>
+      </div>
+      <div class="password-update">
+        <dialog-component :is-show="showPassword" @on-close="closePasswordDialog">
+          <div slot="header">修改密码</div>
+          <div class="dialog_publish_main" slot="main">
+            <label>
+              旧密码:
+              <input type="text" name="" id="">
+            </label>
+            <br/>
+            <label>
+              新密码:
+              <input type="text" name="" id="">
+            </label>
+            <br/>
+            <label>
+              确认密码:
               <input type="text" name="" id="">
             </label>
             <br/>
@@ -44,7 +67,8 @@ export default {
   name: 'UserCenter',
   data() {
     return {
-      showCreateSongList: false
+      showCreateSongList: false,
+      showPassword: false
     }
   },
   methods: {
@@ -54,10 +78,15 @@ export default {
     createSongList() {
       this.showCreateSongList = true
     },
-    closeDialog() {
+    updataPassword() {
+      this.showPassword = true
+    },
+    closeCreateSongListDialog() {
       this.showCreateSongList = false
+    },
+    closePasswordDialog() {
+      this.showPassword = false
     }
-
   },
   components: {
     'dialog-component': Dialog
