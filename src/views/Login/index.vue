@@ -47,9 +47,8 @@ export default {
         password: this.password
       }
       login(userInfo).then(res => {
-        console.log(res)
         if (res.success) {
-          localStorage.setItem('token', res.data.token)
+          localStorage.setItem('token', res.data.data.token)
           location.replace('/')
         } else {
           alert(res.msg)

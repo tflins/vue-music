@@ -5,7 +5,7 @@
         <i class="icon-back"></i>
       </div>
       <div class="title">
-        <span>用户中心</span>
+        <span>欢迎: {{user.name}}</span>
       </div>
       <div class="btn-wrapper" style="">
         <div class="btn">
@@ -14,7 +14,7 @@
         <div class="btn" @click="createSongList">
           <span class="text">创建歌单</span>
         </div>
-        <div class="btn" @click="updataPassword">
+        <div class="btn" @click="updatePassword">
           <span class="text">修改密码</span>
         </div>
         <div class="btn">
@@ -68,13 +68,18 @@
 
 <script>
 import Dialog from '@/base/Dialog'
+import {current} from '@/api/user'
 
 export default {
   name: 'UserCenter',
+  created() {
+    this._getCurrentUser()
+  },
   data() {
     return {
       showCreateSongList: false,
-      showPassword: false
+      showPassword: false,
+      user: {}
     }
   },
   methods: {
@@ -84,7 +89,7 @@ export default {
     createSongList() {
       this.showCreateSongList = true
     },
-    updataPassword() {
+    updatePassword() {
       this.showPassword = true
     },
     closeCreateSongListDialog() {
@@ -92,6 +97,13 @@ export default {
     },
     closePasswordDialog() {
       this.showPassword = false
+    },
+    _getCurrentUser() {
+      current().then(res => {
+        if (res.success) {
+          this.user = res.data.data
+        }
+      })
     }
   },
   components: {
@@ -136,6 +148,10 @@ export default {
     color: $color-theme;
     text-align: center;
     font-size: $font-size-large;
+  }
+  .user-info {
+    position: absolute;
+    top: 50px;
   }
   .btn-wrapper {
       position: absolute;

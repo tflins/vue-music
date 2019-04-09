@@ -29,3 +29,20 @@ export function register(userInfo) {
       throw err
     })
 }
+
+export function current() {
+  const url = 'http://localhost:5000/api/users/current'
+
+  return axios
+    .get(url, {
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    })
+    .then(response => {
+      return Promise.resolve(response.data)
+    })
+    .catch(err => {
+      throw err
+    })
+}
