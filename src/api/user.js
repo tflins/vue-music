@@ -30,6 +30,25 @@ export function register(userInfo) {
     })
 }
 
+export function createSongList(songListData) {
+  const url = 'http://localhost:5000/api/users/createsonglist'
+
+  const data = Object.assign({}, songListData)
+
+  return axios
+    .post(url, data, {
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    })
+    .then(response => {
+      return Promise.resolve(response.data)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
 export function current() {
   const url = 'http://localhost:5000/api/users/current'
 

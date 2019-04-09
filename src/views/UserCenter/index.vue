@@ -27,15 +27,15 @@
           <div class="dialog_publish_main" slot="main">
             <label>
               歌单名称:
-              <input type="text" name="" id="">
+              <input type="text" name="" id="" v-model="songListInfo.name">
             </label>
             <br/>
             <label>
               歌单描述:
-              <input type="text" name="" id="">
+              <input type="text" name="" id="" v-model="songListInfo.desc">
             </label>
             <br/>
-            <button>保存</button>
+            <button @click="_createSongList">保存</button>
           </div>
         </dialog-component>
       </div>
@@ -68,7 +68,7 @@
 
 <script>
 import Dialog from '@/base/Dialog'
-import {current} from '@/api/user'
+import {current, createSongList} from '@/api/user'
 
 export default {
   name: 'UserCenter',
@@ -79,7 +79,11 @@ export default {
     return {
       showCreateSongList: false,
       showPassword: false,
-      user: {}
+      user: {},
+      songListInfo: {
+        name: '',
+        desc: ''
+      }
     }
   },
   methods: {
@@ -102,6 +106,16 @@ export default {
       current().then(res => {
         if (res.success) {
           this.user = res.data.data
+        }
+      })
+    },
+    _createSongList() {
+      createSongList(this.songListInfo).then(res => {
+        if (res.success) {
+          alert('添加歌单成功!')
+          this.showCreateSongList = false
+        } else {
+          alert(res.msg)
         }
       })
     }
