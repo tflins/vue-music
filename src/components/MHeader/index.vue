@@ -1,5 +1,8 @@
 <template>
   <div class="m-header">
+    <router-link class="mine" tag="div" to="/user">
+      <i class="icon-mine"></i>
+    </router-link>
     <div class="icon"></div>
     <div class="text">音 悦</div>
   </div>
@@ -36,6 +39,17 @@ export default {
       vertical-align: top;
       line-height: 44px;
       font-size: $font-size-large;
+  }
+  .mine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    .icon-mine {
+      display: block;
+      padding: 12px;
+      font-size: 20px;
+      color: $color-theme;
+    }
   }
 }
 </style>

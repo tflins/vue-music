@@ -33,7 +33,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 @import "@/common/scss/const.scss";
 @import "@/common/scss/mixin.scss";

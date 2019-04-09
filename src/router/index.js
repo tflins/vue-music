@@ -8,6 +8,7 @@ import Login from '@/views/Login'
 import SingerDetail from '@/views/SingerDetail'
 import RecommendDetail from '@/views/RecommendDetail'
 import Register from '@/views/Register'
+import UserCenter from '@/views/UserCenter'
 
 Vue.use(Router)
 
@@ -52,10 +53,15 @@ const router = new Router({
     {
       path: '/register',
       component: Register
+    },
+    {
+      path: '/user',
+      component: UserCenter
     }
   ]
 })
 
+// 登录拦截
 router.beforeEach((to, from, next) => {
   if (to.path !== '/login' && !localStorage.token && to.path !== '/register') {
     return next('/login')
