@@ -107,6 +107,11 @@ export default {
         if (res.success) {
           this.user = res.data.data
         }
+      }).catch(err => {
+        alert('登录过期!')
+        localStorage.removeItem('token')
+        this.$router.replace('/login')
+        throw err
       })
     },
     _createSongList() {
