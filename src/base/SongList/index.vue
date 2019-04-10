@@ -66,6 +66,7 @@ export default {
       .name {
         @include no-wrap();
         color: $color-text;
+        font-size: $font-size-medium;
       }
       .desc {
         @include no-wrap();
