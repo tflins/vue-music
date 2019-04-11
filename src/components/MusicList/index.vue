@@ -6,7 +6,7 @@
     <h1 class="title" v-html="handleName"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
       <div class="play-wrapper" v-show="songs.length" ref="playBtn">
-        <div class="play">
+        <div class="play" v-if="showBtn">
           <i class="icon-play"></i>
           <span class="text">随机播放</span>
         </div>
@@ -18,9 +18,10 @@
       <div class="song-list-wrapper">
         <song-list :songs="songs" @select="selectItem"></song-list>
       </div>
-      <div class="loading-container" v-show="!songs.length">
+      <center><p v-show="!songs.length">暂无歌曲</p></center>
+      <!-- <div class="loading-container" v-show="!songs.length">
         <loading></loading>
-      </div>
+      </div> -->
     </scroll>
   </div>
 </template>
@@ -29,7 +30,7 @@
 import Scroll from '@/base/Scroll'
 import SongList from '@/base/SongList'
 import {prefixStyle} from '@/common/js/dom'
-import Loading from '@/base/Loading'
+// import Loading from '@/base/Loading'
 import {mapActions} from 'vuex'
 
 // 预留顶部的高度，不滚动到此处
@@ -50,6 +51,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    showBtn: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -82,8 +87,8 @@ export default {
   },
   components: {
     Scroll,
-    SongList,
-    Loading
+    SongList
+    // Loading
   },
   methods: {
     scroll(pos) {

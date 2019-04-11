@@ -101,3 +101,25 @@ export function savesonglist(songListData) {
       throw err
     })
 }
+
+export function onesonglist(id) {
+  const url = 'http://localhost:5000/api/users/onesonglist'
+
+  const params = {
+    id
+  }
+
+  return axios
+    .get(url, {
+      headers: {
+        Authorization: localStorage.getItem('token')
+      },
+      params
+    })
+    .then(response => {
+      return Promise.resolve(response.data)
+    })
+    .catch(err => {
+      throw err
+    })
+}
