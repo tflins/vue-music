@@ -18,14 +18,14 @@
         <button>注 册</button>
       </router-link>
     </div>
-    <div>
+    <!-- <div>
       <br>
       <center>
         <p>测试邮箱：tflins@163.com</p>
         <br>
         <p>密码：123456</p>
       </center>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -14,10 +14,10 @@
         <div class="btn" @click="createSongList">
           <span class="text">创建歌单</span>
         </div>
-        <div class="btn" @click="updatePassword">
+        <!-- <div class="btn" @click="updatePassword">
           <span class="text">修改密码</span>
-        </div>
-        <div class="btn">
+        </div> -->
+        <div class="btn" @click="logout">
           <span class="text">退出登录</span>
         </div>
       </div>
@@ -88,6 +88,10 @@ export default {
     }
   },
   methods: {
+    logout() {
+      localStorage.removeItem('token')
+      this.$router.replace('/login')
+    },
     goToMySongList() {
       this.$router.push('/user/mysonglist')
     },
