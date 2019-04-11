@@ -65,3 +65,20 @@ export function current() {
       throw err
     })
 }
+
+export function getsonglist() {
+  const url = 'http://localhost:5000/api/users/getsonglist'
+
+  return axios
+    .get(url, {
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    })
+    .then(response => {
+      return Promise.resolve(response.data)
+    })
+    .catch(err => {
+      throw err
+    })
+}

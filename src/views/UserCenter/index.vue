@@ -8,7 +8,7 @@
         <span>欢迎: {{user.name}}</span>
       </div>
       <div class="btn-wrapper" style="">
-        <div class="btn">
+        <div class="btn" @click="goToMySongList">
           <span class="text">我的歌单</span>
         </div>
         <div class="btn" @click="createSongList">
@@ -62,6 +62,7 @@
           </div>
         </dialog-component>
       </div>
+    <router-view></router-view>
     </div>
   </transition>
 </template>
@@ -87,6 +88,9 @@ export default {
     }
   },
   methods: {
+    goToMySongList() {
+      this.$router.push('/user/mysonglist')
+    },
     back() {
       this.$router.back()
     },
@@ -135,7 +139,7 @@ export default {
 @import "@/common/scss/const.scss";
 
 .user-center {
-  position: fixed;
+    position: fixed;
     top: 0;
     bottom: 0;
     z-index: 100;

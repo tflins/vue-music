@@ -48,7 +48,7 @@
               <i class="icon-next" @click="next"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon-not-favorite"></i>
+              <i class="icon-not-favorite" @click="addSongList"></i>
             </div>
           </div>
         </div>
@@ -74,6 +74,7 @@
       </div>
     </transition>
     <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error" @timeupdate="timeUpdate"></audio>
+    <dialog-component></dialog-component>
   </div>
 </template>
 
@@ -83,6 +84,7 @@ import animations from 'create-keyframe-animation'
 import {prefixStyle} from '@/common/js/dom'
 import ProgressBar from '@/base/ProgressBar'
 import ProgressCircle from '@/base/ProgressCircle'
+import Dialog from '@/base/Dialog'
 
 const transform = prefixStyle('transform')
 
@@ -116,6 +118,9 @@ export default {
     }
   },
   methods: {
+    addSongList() {
+      console.log(this.currentSong)
+    },
     onPercentChange(percent) {
       this.$refs.audio.currentTime = this.currentSong.duration * percent
       if (!this.playing) {
@@ -273,7 +278,8 @@ export default {
   },
   components: {
     ProgressBar,
-    ProgressCircle
+    ProgressCircle,
+    'dialog-component': Dialog
   }
 }
 </script>
