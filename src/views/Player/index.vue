@@ -98,8 +98,7 @@ import {prefixStyle} from '@/common/js/dom'
 import ProgressBar from '@/base/ProgressBar'
 import ProgressCircle from '@/base/ProgressCircle'
 import Dialog from '@/base/Dialog'
-import {getsonglist} from '@/api/user'
-import {savesonglist} from '@/api/user'
+import {getsonglist, savesonglist} from '@/api/user'
 
 const transform = prefixStyle('transform')
 

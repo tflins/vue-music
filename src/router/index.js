@@ -10,6 +10,7 @@ import RecommendDetail from '@/views/RecommendDetail'
 import Register from '@/views/Register'
 import UserCenter from '@/views/UserCenter'
 import MySongList from '@/views/MySongList'
+import SongListDetaill from '@/views/SongListDetaill'
 
 Vue.use(Router)
 
@@ -61,7 +62,13 @@ const router = new Router({
       children: [
         {
           path: 'mysonglist',
-          component: MySongList
+          component: MySongList,
+          children: [
+            {
+              path: ':id',
+              component: SongListDetaill
+            }
+          ]
         }
       ]
     }

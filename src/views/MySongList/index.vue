@@ -11,13 +11,14 @@
       <div>
         <div class="recommend-list">
           <ul>
-            <li class="item" v-for="item in mySongList" :key="item.id" @click="selectItem(item)">
+            <li class="item" v-for="item in mySongList" :key="item._id" @click="selectItem(item)">
               <p>{{ item.name }}</p>
             </li>
           </ul>
         </div>
       </div>
     </scroll>
+    <router-view></router-view>
   </div>
 </transition>
 </template>
@@ -38,6 +39,12 @@ export default {
   methods: {
     back() {
       this.$router.back()
+    },
+    selectItem(item) {
+      console.log(item._id)
+      this.$router.push({
+        path: `/user/mysonglist/${item._id}`
+      })
     },
     _getsonglist() {
       getsonglist().then(res => {
