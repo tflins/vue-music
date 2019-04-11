@@ -74,7 +74,20 @@
       </div>
     </transition>
     <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error" @timeupdate="timeUpdate"></audio>
-    <dialog-component></dialog-component>
+    <dialog-component :is-show="showAdd" @on-close="closeAdd">
+      <div slot="header">添加到歌单</div>
+      <div class="dialog_publish_main" slot="main">
+        <label>
+          添加到:
+          <select name="songlist">
+            <option v-for="item in currentSongList" :value="item.id" :key="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </label>
+        <button>保存</button>
+      </div>
+    </dialog-component>
   </div>
 </template>
 
@@ -85,6 +98,7 @@ import {prefixStyle} from '@/common/js/dom'
 import ProgressBar from '@/base/ProgressBar'
 import ProgressCircle from '@/base/ProgressCircle'
 import Dialog from '@/base/Dialog'
+import {getsonglist} from '@/api/user'
 
 const transform = prefixStyle('transform')
 
@@ -95,8 +109,13 @@ export default {
       // 当前歌曲播放时长
       currentTime: 0,
       // 播放圆形进度条半径
-      radius: 32
+      radius: 32,
+      showAdd: false
     }
+  },
+  created() {
+    // 当前用户歌单信息
+    this.currentSongList = []
   },
   computed: {
     ...mapGetters(['fullScreen', 'playList', 'currentSong', 'playing', 'currentIndex']),
@@ -118,8 +137,25 @@ export default {
     }
   },
   methods: {
+    _getsonglist() {
+      getsonglist().then(res => {
+        if (res.success) {
+          this.currentSongList = res.data.data
+        }
+      }).catch(err => {
+        alert('登录过期!')
+        localStorage.removeItem('token')
+        this.$router.replace('/login')
+        throw err
+      })
+    },
     addSongList() {
       console.log(this.currentSong)
+      this.showAdd = true
+      this._getsonglist()
+    },
+    closeAdd() {
+      this.showAdd = false
     },
     onPercentChange(percent) {
       this.$refs.audio.currentTime = this.currentSong.duration * percent
