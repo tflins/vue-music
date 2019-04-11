@@ -79,13 +79,13 @@
       <div class="dialog_publish_main" slot="main">
         <label>
           添加到:
-          <select name="songlist">
-            <option v-for="item in currentSongList" :value="item.id" :key="item.id">
+          <select name="songlist" ref="songList">
+            <option v-for="item in currentSongList" :value="item._id" :key="item.id">
               {{ item.name }}
             </option>
           </select>
         </label>
-        <button>保存</button>
+        <button @click="_saveSongList">保存</button>
       </div>
     </dialog-component>
   </div>
@@ -99,6 +99,7 @@ import ProgressBar from '@/base/ProgressBar'
 import ProgressCircle from '@/base/ProgressCircle'
 import Dialog from '@/base/Dialog'
 import {getsonglist} from '@/api/user'
+import {savesonglist} from '@/api/user'
 
 const transform = prefixStyle('transform')
 
@@ -116,6 +117,7 @@ export default {
   created() {
     // 当前用户歌单信息
     this.currentSongList = []
+    this._getsonglist()
   },
   computed: {
     ...mapGetters(['fullScreen', 'playList', 'currentSong', 'playing', 'currentIndex']),
@@ -137,22 +139,39 @@ export default {
     }
   },
   methods: {
+    _saveSongList() {
+      const $select = this.$refs.songList
+      let id = $select.options[$select.selectedIndex].value
+      const data = {
+        id,
+        song: this.currentSong
+      }
+      savesonglist(data).then(res => {
+        if (res.success) {
+          alert('添加成功')
+          this.showAdd = false
+        } else {
+          alert('歌单不存在!')
+          this.showAdd = false
+        }
+      })
+    },
     _getsonglist() {
       getsonglist().then(res => {
         if (res.success) {
           this.currentSongList = res.data.data
+          console.log(this.currentSongList)
         }
       }).catch(err => {
-        alert('登录过期!')
         localStorage.removeItem('token')
         this.$router.replace('/login')
+        alert('登录过期!')
         throw err
       })
     },
     addSongList() {
       console.log(this.currentSong)
       this.showAdd = true
-      this._getsonglist()
     },
     closeAdd() {
       this.showAdd = false

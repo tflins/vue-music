@@ -82,3 +82,22 @@ export function getsonglist() {
       throw err
     })
 }
+
+export function savesonglist(songListData) {
+  const url = 'http://localhost:5000/api/users/savesonglist'
+
+  const data = Object.assign({}, songListData)
+
+  return axios
+    .post(url, data, {
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    })
+    .then(response => {
+      return Promise.resolve(response.data)
+    })
+    .catch(err => {
+      throw err
+    })
+}
